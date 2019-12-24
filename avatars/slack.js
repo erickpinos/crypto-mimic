@@ -15,27 +15,6 @@ const client = new CoinMarketCap(apiKey)
 //client.getTickers().then(console.log).catch(console.error)
 //client.getGlobal().then(console.log).catch(console.error)
 
-const rp = require('request-promise');
-const requestOptions = {
-  method: 'GET',
-  uri: 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest',
-  qs: {
-    'id': '1'
-  },
-  headers: {
-    'X-CMC_PRO_API_KEY': `${process.env.COINMARKETCAP_KEY}`
-  },
-  json: true,
-  gzip: true
-};
-
-rp(requestOptions).then(response => {
-  console.log('API call response:', response.data[1].name);
-  console.log('API call response:', response.data[1].quote["USD"].price);
-}).catch((err) => {
-  console.log('API call error:', err.message);
-});
-
 var methods = {
 	runSlackAvatar: function() {
 		const bot = new SlackBot({
