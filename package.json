@@ -1,0 +1,27 @@
+{
+  "name": "ultron-crypto-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "nodemon main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/erickpinos/ultron-crypto-bot.git"
+  },
+  "author": "Erick Pinos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/erickpinos/ultron-crypto-bot/issues"
+  },
+  "homepage": "https://github.com/erickpinos/ultron-crypto-bot#readme",
+  "dependencies": {
+    "coinmarketcap-api": "^3.0.1",
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.1",
+    "request-promise": "^4.2.5",
+    "slackbots": "^1.2.0",
+    "twit": "^2.2.11"
+  }
+}
