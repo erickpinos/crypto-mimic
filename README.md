@@ -1,4 +1,4 @@
-# Ultron Crypto Bot
+# Nortlu Bot
 
 ## Libraries used
 slackbots = api for slack

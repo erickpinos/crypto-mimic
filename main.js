@@ -1,7 +1,7 @@
 // Initialization Message
 // TODO: replace with package info
 console.log("---------------------------- \
-  \nInitializing Ultron Crypto Bot. \
+  \nInitializing Nortlu Bot. \
   \nVersion 1.0.0 \
   \n----------------------------");
 
