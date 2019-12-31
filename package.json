@@ -1,5 +1,5 @@
 {
-  "name": "nortlu-bot",
+  "name": "crypto-mimic",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/erickpinos/ultron-crypto-bot.git"
+    "url": "git+https://github.com/erickpinos/crypto-mimic.git"
   },
   "author": "Erick Pinos",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/erickpinos/ultron-crypto-bot/issues"
+    "url": "https://github.com/erickpinos/crypto-mimic/issues"
   },
-  "homepage": "https://github.com/erickpinos/ultron-crypto-bot#readme",
+  "homepage": "https://github.com/erickpinos/crypto-mimic#readme",
   "dependencies": {
     "coinmarketcap-api": "^3.0.1",
     "dotenv": "^8.2.0",

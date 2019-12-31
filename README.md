@@ -1,4 +1,4 @@
-# Nortlu Bot
+# Crypto Mimic
 
 ## Libraries used
 slackbots = api for slack
