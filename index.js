@@ -5,8 +5,6 @@ console.log("---------------------------- \
   \nVersion 1.0.0 \
   \n----------------------------");
 
-console.log("Running");
-
 // Imports
 const SlackBot = require('slackbots');
 const dotenv = require('dotenv')
@@ -37,7 +35,10 @@ var points = 0;
 
 // SlackBot methods
 slackBot.on('start', () => {
-	slackBot.postMessageToChannel('general', 'hello world');
+//	slackBot.postMessageToChannel('general', 'hello world');
+  runScheduleBitcoinPrice()
+// runGetBitcoinPrice();
+console.log("slackBot Running");
 })
 
 slackBot.on('error', (err) => {
@@ -65,6 +66,8 @@ function handleMessage(message) {
     	runGetBitcoinPrice()
     } else if(message.includes(' post bitcoin price')) {
     	runPostBitcoinPrice()
+    } else if(message.includes(' schedule bitcoin price')) {
+      runScheduleBitcoinPrice()
     } else if(message.includes(' help')) {
     	runHelp()
     }
@@ -77,8 +80,28 @@ function runHelp(){
   \n `get tweets username` return a list of your most recent tweets \
   \n `add` adds 1 to the current list \
   \n `get bitcoin price` returns the current bitcoin price \
+  \n `schedule bitcoin price` schedules the current bitcoin price to be tweeted every day \
   \n `post bitcoin price` posts the current bitcoin price on Twitter \
   \n `help` shows this message")
+}
+
+function runScheduleBitcoinPrice() {
+  response = 'Bitcoin price is now scheduled to be tweeted every day.';
+  slackBot.postMessageToChannel('general', response);
+  console.log(response);
+
+  var count = 0; 
+
+  var intervalObject = setInterval(function () { 
+    count++; 
+//``    console.log(count, 'seconds passed'); 
+      if (count == 86400) { 
+        console.log('running PostBitcoinPrice'); 
+//        clearInterval(intervalObject); 
+        runPostBitcoinPrice();
+        count = 0;
+      } 
+  }, 1000); 
 }
 
 function runAdd(){ 
@@ -95,7 +118,48 @@ function runGetTweets(message){
   getTweets(username);
 }
 
+function getBitcoinPrice() {
+  const rp = require('request-promise');
+  const requestOptions = {
+    method: 'GET',
+    uri: 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest',
+    qs: {
+      'id': '1'
+    },
+    headers: {
+      'X-CMC_PRO_API_KEY': `${process.env.COINMARKETCAP_API_KEY}`
+    },
+    json: true,
+    gzip: true
+  };
+
+  return rp(requestOptions).then(response => {
+    console.log('API call response:', response.data[1].name);
+    return response;
+    let test2 = response;
+    console.log(test2);
+    var price = response.data[1].quote["USD"].price;
+    console.log(price);
+//        bot.postMessageToChannel('general', response.data[1].name);
+//        bot.postMessageToChannel('general', response.data[1].quote["USD"].price);
+    priceRounded = Math.round(price * 100) / 100
+    var message = "The current Bitcoin price is " + priceRounded + " USD.";
+    console.log(message);
+    slackBot.postMessageToChannel('general', message);
+  }).catch((err) => {
+  console.log('API call error:', err.message);
+  slackBot.postMessageToChannel('general', "Couldn't return Bitcoin price.");
+  });
+
+  console.log(test);
+
+  return test;
+}
+
 function runGetBitcoinPrice() {
+  var priceBitcoin = getBitcoinPrice();
+  console.log('priceBitcoin: ', priceBitcoin);
+
 	const rp = require('request-promise');
 	const requestOptions = {
   	method: 'GET',
@@ -115,7 +179,8 @@ function runGetBitcoinPrice() {
     console.log(price);
 //        bot.postMessageToChannel('general', response.data[1].name);
 //        bot.postMessageToChannel('general', response.data[1].quote["USD"].price);
-    var message = "The current Bitcoin price is " + price + " USD.";
+    priceRounded = Math.round(price * 100) / 100
+    var message = "The current Bitcoin price is " + priceRounded + " USD.";
     console.log(message);
     slackBot.postMessageToChannel('general', message);
   }).catch((err) => {
@@ -144,7 +209,8 @@ function runPostBitcoinPrice() {
     console.log(price);
 //        bot.postMessageToChannel('general', response.data[1].name);
 //        bot.postMessageToChannel('general', response.data[1].quote["USD"].price);
-    var message = "The current Bitcoin price is " + price + " USD.";
+    priceRounded = Math.round(price * 100) / 100
+    var message = "The current Bitcoin price is " + priceRounded + " USD.";
     console.log(message);
     slackBot.postMessageToChannel('general', message);
     tweet(message);
