@@ -10,7 +10,7 @@ console.log("Running");
 // Imports
 const SlackBot = require('slackbots');
 const dotenv = require('dotenv')
-const twit = require('twit');
+var Twit = require('twit');
 const CoinMarketCap = require('coinmarketcap-api')
 
 // Initialize .env using dotenv
@@ -21,7 +21,7 @@ const coinMarketCap = new CoinMarketCap(
 	`${process.env.COINMARKETCAP_API_KEY}`
 );
 
-const twitterBot = new twit({
+var twitterBot = new Twit({
   consumer_key: `${process.env.TWITTER_CONSUMER_KEY}`,
   consumer_secret: `${process.env.TWITTER_CONSUMER_SECRET}`,
   access_token: `${process.env.TWITTER_ACCESS_TOKEN}`,
@@ -74,7 +74,7 @@ function handleMessage(message) {
 // Slackbot responses
 function runHelp(){
 	slackBot.postMessageToChannel('general', "_Commands_ \
-  \n `get tweets @username` return a list of your most recent tweets \
+  \n `get tweets username` return a list of your most recent tweets \
   \n `add` adds 1 to the current list \
   \n `get bitcoin price` returns the current bitcoin price \
   \n `post bitcoin price` posts the current bitcoin price on Twitter \
@@ -88,7 +88,7 @@ function runAdd(){
 }
 
 function runGetTweets(message){
-	var username = message.substring(25); //TODO: Dynamically pull twitter username
+	var username = message.substring(24); //TODO: Dynamically pull twitter username
   console.log(username);
   response = 'Getting tweets for ' + username + '.';
   slackBot.postMessageToChannel('general', response);
